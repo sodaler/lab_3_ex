@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+    <form action="#" th:action="@{/groupe/{id}(id=${id})}" th:object="${groupeDto}" method="post">
+
+        <div class="mb-3">
+            <label for="Name" class="form-label">Наименование группы</label>
+            <input type="text" class="form-control" id="Name" th:field="${groupeDto.name}" required="true">
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Студент</th>
+                <th scope="col">Общежитие</th>
+                <th scope="col">Группа</th>
+                <th scope="col">Предметы</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="stydent, iterator: ${stydents}">
+                <th scope="row" th:text="${iterator.index} + 1"/>
+                <td th:text="${stydent.id}"/>
+                <td th:text="${stydent.firstName} + ' ' + ${stydent.lastName}"/>
+                <td th:text="${stydent.hostelStatusStr}" />
+                <td th:text="${stydent.groupe.name}" />
+                <td th:text="${stydent.prettySubjects()}" />
+                <td style="width: 10%">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary button-fixed">
+                    <span th:if="${id == null}">Добавить</span>
+                    <span th:if="${id != null}">Обновить</span>
+                </button>
+                <a class="btn btn-secondary button-fixed" th:href="@{/groupe}">
+                    Назад
+                </a>
+            </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+    <form action="#" th:action="@{/subject/{id}(id=${id})}" th:object="${subjectDto}" method="post">
+
+        <div class="mb-3">
+            <label for="subjectName" class="form-label">Наименование предмета</label>
+            <input type="text" class="form-control" id="subjectName" th:field="${subjectDto.name}" required="true">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Студенты</label>
+            <ul>
+                <li th:each="student : ${students}">
+                    <div>
+                        <input type="checkbox" th:field="*{students}" th:value="${student.id}">
+                        <label th:text="${student.firstName} + ' ' + ${student.lastName}"></label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary button-fixed">
+                <span th:if="${id == null}">Добавить</span>
+                <span th:if="${id != null}">Обновить</span>
+            </button>
+            <a class="btn btn-secondary button-fixed" th:href="@{/subject}">
+                Назад
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

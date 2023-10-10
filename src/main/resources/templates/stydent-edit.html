@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+    <form action="#" th:action="@{/stydent/{id}(id=${id})}" th:object="${stydentDto}" method="post">
+
+        <div class="mb-3">
+            <label for="firstName" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="firstName" th:field="${stydentDto.firstName}" required="true">
+        </div>
+
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" id="lastName" th:field="${stydentDto.lastName}" required="true">
+        </div>
+
+       <div class="mb-3">
+            <label class="form-label">Общежитие</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" th:field="${stydentDto.hostelStatus}" th:value="true">
+                <label class="form-check-label" for="flexRadioDefault1">Проживает</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="false" th:field="${stydentDto.hostelStatus}" th:value="false">
+                <label class="form-check-label" for="flexRadioDefault2">Не проживает</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Группа</label>
+            <select th:field="${stydentDto.groupe.id}">
+                <option
+                        th:each="groupe: ${groups}" th:text="${groupe.name}" th:value="${groupe.id}">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Предметы</label>
+            <ul>
+                <li th:each="subject : ${subjects}">
+                    <div>
+                        <input type="checkbox" th:field="*{subjects}" th:value="${subject.id}">
+                        <label th:text="${subject.name}"></label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary button-fixed">
+                <span th:if="${id == null}">Добавить</span>
+                <span th:if="${id != null}">Обновить</span>
+            </button>
+            <a class="btn btn-secondary button-fixed" th:href="@{/stydent}">
+                Назад
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

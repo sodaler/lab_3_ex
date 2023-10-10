@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <div>
+        <a class="btn btn-success button-fixed"
+           th:href="@{/subject/edit/}">
+            <i class="fa-solid fa-plus"></i> Добавить
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Наименование предмета</th>
+                <th scope="col">Студенты</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subject, iterator: ${subjects}">
+                <th scope="row" th:text="${iterator.index} + 1"/>
+                <td th:text="${subject.id}" />
+                <td th:text="${subject.name}"/>
+                <td th:text="${subject.prettyStudents()}" />
+                <td style="width: 10%">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a class="btn btn-warning button-fixed button-sm"
+                           th:href="@{/subject/edit/{id}(id=${subject.id})}">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> Изменить
+                        </a>
+                        <button type="button" class="btn btn-danger button-fixed button-sm"
+                                th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${subject.id}').click()|">
+                            <i class="fa fa-trash" aria-hidden="true"></i> Удалить
+                        </button>
+                    </div>
+                    <form th:action="@{/subject/delete/{id}(id=${subject.id})}" method="post">
+                        <button th:id="'remove-' + ${subject.id}" type="submit" style="display: none">
+                            Удалить
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
