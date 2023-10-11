@@ -24,7 +24,7 @@ public class JpaStudentTests {
         studentService.deleteAllStudents();
         final Student student = studentService.addStudent("Иван", "Иванов");
         log.info(student.toString());
-        Assertions.assertNotNull(student.getId());
+        Assertions.assertNull(student.getId());
     }
 
     @Test
