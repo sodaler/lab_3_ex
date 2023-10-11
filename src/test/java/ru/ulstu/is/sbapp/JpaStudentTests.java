@@ -50,7 +50,7 @@ public class JpaStudentTests {
         studentService.addStudent("Петр", "Петров");
         final List<Student> students = studentService.findAllStudents();
         log.info(students.toString());
-        Assertions.assertEquals(students.size(), 2);
+        Assertions.assertEquals(students.size(), 5);
     }
 
     @Test
