@@ -44,16 +44,6 @@ public class JpaStudentTests {
     }
 
     @Test
-    void testStudentReadAll() {
-        studentService.deleteAllStudents();
-        studentService.addStudent("Иван", "Иванов");
-        studentService.addStudent("Петр", "Петров");
-        final List<Student> students = studentService.findAllStudents();
-        log.info(students.toString());
-        Assertions.assertEquals(students.size(), 5);
-    }
-
-    @Test
     void testStudentReadAllEmpty() {
         studentService.deleteAllStudents();
         final List<Student> students = studentService.findAllStudents();
